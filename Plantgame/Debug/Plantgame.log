@@ -1,12 +1,2 @@
-﻿  main.cpp
-g:\dev\workspace\plantgame\plantgame\main.cpp(77): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\dev\workspace\plantgame\plantgame\main.cpp(78): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\dev\workspace\plantgame\plantgame\main.cpp(79): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\dev\workspace\plantgame\plantgame\main.cpp(80): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\dev\workspace\plantgame\plantgame\main.cpp(148): warning C4305: 'initializing': truncation from 'double' to 'float'
-g:\dev\workspace\plantgame\plantgame\main.cpp(151): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-g:\dev\workspace\plantgame\plantgame\main.cpp(170): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-g:\dev\workspace\plantgame\plantgame\main.cpp(171): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-g:\dev\workspace\plantgame\plantgame\main.cpp(251): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-g:\dev\workspace\plantgame\plantgame\main.cpp(252): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+﻿  Bullet.cpp
   Plantgame.vcxproj -> G:\Dev\Workspace\Plantgame\Debug\Plantgame.exe
