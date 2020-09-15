@@ -1,2 +1,7 @@
-﻿  Bullet.cpp
-  Plantgame.vcxproj -> G:\Dev\Workspace\Plantgame\Debug\Plantgame.exe
+﻿  main.cpp
+g:\dev\workspace\plantgame\plantgame\main.cpp(32): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+g:\dev\workspace\plantgame\plantgame\main.cpp(33): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+g:\dev\workspace\plantgame\plantgame\main.cpp(34): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+g:\dev\workspace\plantgame\plantgame\main.cpp(103): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+g:\dev\workspace\plantgame\plantgame\main.cpp(104): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Plantgame.vcxproj -> G:\Dev\Workspace\plantgame\Debug\Plantgame.exe

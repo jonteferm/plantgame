@@ -6,14 +6,14 @@ class Bullet
 {
 private:
 	// 2D velocity maps (current and previous)
-	float * u;
-	float * v;
-	float * u_prev;
-	float * v_prev;
-	
+	int x;
+	int y;
+	int dir;
+	float v = 1.0f;
 public:
-	Bullet();
+	Bullet(int dir, int x, int y);
 	~Bullet();
-	void update();
+	void update(float elapsed);
 	void render(TCODImage * img);
+
 };

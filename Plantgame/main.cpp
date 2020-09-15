@@ -114,9 +114,9 @@ void get_from_UI ( float * d, float * u, float * v, float elapsed, TCOD_key_t k,
 			d[IX(playerx*2,playery*2)] = source;
 		}
 	}
-	if (shotDelay < 0.0f) {
+	if (shotDelay < 0.5f) {
 		if (mouse.lbutton) {
-			shotsFired.push_back(Bullet());
+			shotsFired.push_back(Bullet(2, playerx*2, playery*2));
 		}
 	}
 
@@ -127,7 +127,7 @@ void update(float elapsed, TCOD_key_t k, TCOD_mouse_t mouse) {
 	smoke->update(u, v, u_prev, v_prev, elapsed, dens, dens_prev);
 
 	for (std::vector<int>::size_type i = 0; i != shotsFired.size(); i++) {
-		shotsFired[i].update();
+		shotsFired[i].update(elapsed);
 	}
 }
 
@@ -135,6 +135,9 @@ void render() {
 	static TCODColor fire = TCODColor::lightAmber;
 	
 	smoke->render(img);
+	for (std::vector<int>::size_type i = 0; i != shotsFired.size(); i++) {
+		shotsFired[i].render(img);
+	}
 	img->blit2x(TCODConsole::root, 0, 0);
 
 	TCODConsole::root->print(2,HEIGHT-2,"%4d fps", TCODSystem::getFps());
