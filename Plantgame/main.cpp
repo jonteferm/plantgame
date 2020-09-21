@@ -31,6 +31,7 @@
 #include <sstream>
 #include "Smoke.h";
 #include "Bullet.h";
+#include "Enemy.h";
 #include <vector>;
 
 // gas simulation
@@ -43,7 +44,8 @@
 float force=40.0f;
 float source=5000.0f;
 float stepDelay=0.05f;
-float shotDelay = 0.2f;
+float shotDelay = 0.05f;
+
 
 int playerx=N/4,playery=N/4;
 
@@ -52,6 +54,7 @@ char objPos[SIZE][SIZE];
 Smoke *smoke;
 TCODImage *img;
 std::vector<Bullet> shotsFired;
+std::vector<Enemy> cops;
 
 float u[SIZE], v[SIZE], u_prev[SIZE], v_prev[SIZE];
 float dens[SIZE], dens_prev[SIZE];
@@ -61,6 +64,7 @@ void get_from_UI ( float * d, float * u, float * v, float elapsed, TCOD_key_t k,
 	float vx=0.0f,vy=0.0f;
 	shotDelay -= elapsed;
 	stepDelay -= elapsed;
+	
 	if ( stepDelay < 0.0f ) {
 		if (toupper(k.c) == 'W' && playery > 0 ) {
 			playery--;
@@ -114,12 +118,53 @@ void get_from_UI ( float * d, float * u, float * v, float elapsed, TCOD_key_t k,
 			d[IX(playerx*2,playery*2)] = source;
 		}
 	}
-	if (shotDelay < 0.5f) {
-		if (mouse.lbutton) {
-			shotsFired.push_back(Bullet(2, playerx*2, playery*2));
-		}
-	}
 
+	if (shotDelay < 0.0f) {
+		if (mouse.lbutton) {
+			int delta_x = mouse.cx - playerx;
+			int delta_y = mouse.cy - playery;
+
+			float angleDeg = atan2(delta_x, delta_y) * (180.0 / 3.14159265359);
+
+			std::cout << std::to_string(angleDeg) << std::endl;
+
+			if (angleDeg > 0) {
+				if (angleDeg <= 180 && angleDeg >= 160) {
+					shotsFired.push_back(Bullet(8, playerx * 2, playery * 2));
+				}
+				else if (angleDeg <= 90 && angleDeg >= 70) {
+					shotsFired.push_back(Bullet(6, playerx * 2, playery * 2));
+				}
+				else if (angleDeg >= 0 && angleDeg <= 20) {
+					shotsFired.push_back(Bullet(2, playerx * 2, playery * 2));
+				}
+				else if (angleDeg < 160 && angleDeg > 90) {
+					shotsFired.push_back(Bullet(9, playerx * 2, playery * 2));
+				}
+				else if (angleDeg < 70 && angleDeg > 20) {
+					shotsFired.push_back(Bullet(3, playerx * 2, playery * 2));
+				}
+			}
+			else if (angleDeg < 0) {
+				if (angleDeg >= -180 && angleDeg <= -160) {
+					shotsFired.push_back(Bullet(8, playerx * 2, playery * 2));
+				}
+				else if (angleDeg >= -90 && angleDeg <= -70) {
+					shotsFired.push_back(Bullet(4, playerx * 2, playery * 2));
+				}
+				else if (angleDeg < 0 && angleDeg >= -20) {
+					shotsFired.push_back(Bullet(2, playerx * 2, playery * 2));
+				}
+				else if (angleDeg > -160 && angleDeg < -90) {
+					shotsFired.push_back(Bullet(7, playerx * 2, playery * 2));
+				}
+				else if (angleDeg > -70 && angleDeg < -20) {
+					shotsFired.push_back(Bullet(1, playerx * 2, playery * 2));
+				}
+			}
+		}
+		shotDelay = 0.05f;
+	}
 }
 
 void update(float elapsed, TCOD_key_t k, TCOD_mouse_t mouse) {
@@ -128,6 +173,10 @@ void update(float elapsed, TCOD_key_t k, TCOD_mouse_t mouse) {
 
 	for (std::vector<int>::size_type i = 0; i != shotsFired.size(); i++) {
 		shotsFired[i].update(elapsed);
+		if (shotsFired[i].getDistTravelled() >= shotsFired[i].getReach()) {
+			shotsFired.erase(shotsFired.begin() + i);
+			i--;
+		}
 	}
 }
 
@@ -135,9 +184,12 @@ void render() {
 	static TCODColor fire = TCODColor::lightAmber;
 	
 	smoke->render(img);
+
 	for (std::vector<int>::size_type i = 0; i != shotsFired.size(); i++) {
 		shotsFired[i].render(img);
 	}
+
+
 	img->blit2x(TCODConsole::root, 0, 0);
 
 	TCODConsole::root->print(2,HEIGHT-2,"%4d fps", TCODSystem::getFps());
@@ -154,6 +206,10 @@ void render() {
 		}
 	}
 
+	for (std::vector<int>::size_type i = 0; i != cops.size(); i++) {
+		cops[i].render();
+	}
+
 	TCODConsole::root->putChar(playerx, playery, '@');
 }
 
@@ -168,6 +224,9 @@ int main (int argc, char *argv[]) {
 	smoke = new Smoke();
 	smoke->init();
 
+	cops.push_back(Enemy(20, 20));
+
+
 	bool endCredits=false;
 
 
@@ -176,11 +235,7 @@ int main (int argc, char *argv[]) {
 		TCOD_mouse_t mouse;
 
 		TCODSystem::checkForEvent(TCOD_EVENT_KEY|TCOD_EVENT_MOUSE, &k, &mouse);
-/*
-		v_prev[IX(N/2,0)] = 1.0f;
-		u_prev[IX(N/3,N/3)]=1.0f;
-		dens_prev[IX(N/2,0)] = 128.0f;
-*/
+
 		if ( k.vk == TCODK_PRINTSCREEN ) {
 			// screenshot
 			if (! k.pressed ) TCODSystem::saveScreenshot(NULL);

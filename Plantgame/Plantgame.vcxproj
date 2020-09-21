@@ -124,12 +124,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Smoke.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="main.hpp" />
     <ClInclude Include="Smoke.h" />
   </ItemGroup>
