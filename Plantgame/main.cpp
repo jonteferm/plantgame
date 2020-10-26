@@ -33,28 +33,26 @@
 #include "Bullet.h";
 #include "Enemy.h";
 #include <vector>;
+#include "AStar.h";
 
 // gas simulation
 // based on Jos Stam, "Real-Time Fluid Dynamics for Games". Proceedings of the Game Developer Conference, March 2003.
 // http://www.dgp.toronto.edu/people/stam/reality/Research/pub.html
-
-
-
 
 float force=40.0f;
 float source=5000.0f;
 float stepDelay=0.05f;
 float shotDelay = 0.05f;
 
-
 int playerx=N/4,playery=N/4;
 
-char objPos[SIZE][SIZE];
+vector<vector<char>> objPos(WIDTH, vector<char>(HEIGHT));
 
 Smoke *smoke;
 TCODImage *img;
 std::vector<Bullet> shotsFired;
 std::vector<Enemy> cops;
+AStar aStar;
 
 float u[SIZE], v[SIZE], u_prev[SIZE], v_prev[SIZE];
 float dens[SIZE], dens_prev[SIZE];
@@ -178,6 +176,27 @@ void update(float elapsed, TCOD_key_t k, TCOD_mouse_t mouse) {
 			i--;
 		}
 	}
+
+	for (std::vector<int>::size_type i = 0; i != cops.size(); i++) {
+		Node enemy;
+		enemy.x = cops[i].getX();
+		enemy.y = cops[i].getY();
+
+		Node player;
+		player.x = playerx;
+		player.y = playery;
+
+		vector<Node> path;
+		if (cops[i].getSteps() == 0) {
+			path = aStar.aStar(enemy, player, objPos);
+			
+		}
+		else {
+			path = cops[i].getPath();
+		}
+
+		cops[i].update(path);
+	}
 }
 
 void render() {
@@ -196,8 +215,8 @@ void render() {
 	TCODConsole::root->setDefaultForeground(TCODColor::white);
 	TCODConsole::root->putChar(playerx,playery,'@');
 
-	for (int x = 0; x <= N; x++) {
-		for (int y = 0; y <= N; y++) {
+	for (int x = 0; x < WIDTH; x++) {
+		for (int y = 0; y < HEIGHT; y++) {
 			char obj = objPos[x][y];
 			if (obj != '\0')
 			{
@@ -207,7 +226,8 @@ void render() {
 	}
 
 	for (std::vector<int>::size_type i = 0; i != cops.size(); i++) {
-		cops[i].render();
+		TCODConsole::root->putChar(cops[i].getX(), cops[i].getY(), 'C');
+		//cops[i].render();
 	}
 
 	TCODConsole::root->putChar(playerx, playery, '@');
