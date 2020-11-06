@@ -43,6 +43,7 @@ float force=40.0f;
 float source=5000.0f;
 float stepDelay=0.05f;
 float shotDelay = 0.05f;
+float aStarCalcDelay = 2.0f;
 
 int playerx=N/4,playery=N/4;
 
@@ -124,7 +125,7 @@ void get_from_UI ( float * d, float * u, float * v, float elapsed, TCOD_key_t k,
 
 			float angleDeg = atan2(delta_x, delta_y) * (180.0 / 3.14159265359);
 
-			std::cout << std::to_string(angleDeg) << std::endl;
+			//std::cout << std::to_string(angleDeg) << std::endl;
 
 			if (angleDeg > 0) {
 				if (angleDeg <= 180 && angleDeg >= 160) {
@@ -177,6 +178,8 @@ void update(float elapsed, TCOD_key_t k, TCOD_mouse_t mouse) {
 		}
 	}
 
+	aStarCalcDelay -= elapsed;
+
 	for (std::vector<int>::size_type i = 0; i != cops.size(); i++) {
 		Node enemy;
 		enemy.x = cops[i].getX();
@@ -187,15 +190,17 @@ void update(float elapsed, TCOD_key_t k, TCOD_mouse_t mouse) {
 		player.y = playery;
 
 		vector<Node> path;
-		if (cops[i].getSteps() == 0) {
+
+		if (cops[i].getPath().empty() || aStarCalcDelay <= 0.0f) {
 			path = aStar.aStar(enemy, player, objPos);
-			
+			aStarCalcDelay = 2.0f;
+			cops[i].update(path, elapsed);
 		}
 		else {
 			path = cops[i].getPath();
 		}
 
-		cops[i].update(path);
+		cops[i].move(elapsed);
 	}
 }
 

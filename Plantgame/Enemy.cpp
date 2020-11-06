@@ -17,23 +17,24 @@ void Enemy::render() {
 	TCODConsole::root->putChar(this->x, this->y, 'C');
 }
 
-void Enemy::update(vector<Node> path) {
-
-	if (this->path.size() == 0) {
-		this->path = path;
-	}
-
-	move();
+void Enemy::update(vector<Node> path, float &elapsed) {
+	this->path = path;
+	this->steps = 0;
 }
 
-void Enemy::move() {
+void Enemy::move(float &elapsed) {
 	int steps = this->steps;
 
-	if (steps <= this->path.size()) {
-		this->x = this->path[this->steps].x;
-		this->y = this->path[this->steps].y;
+	this->stepDelay -= elapsed;
 
-		this->steps++;
+	if (this->stepDelay < 0.0f) {
+		if (steps <= this->path.size()-1) {
+			this->x = this->path[this->steps].x;
+			this->y = this->path[this->steps].y;
+
+			this->steps++;
+		}
+		this->stepDelay = 0.1f;
 	}
 }
 

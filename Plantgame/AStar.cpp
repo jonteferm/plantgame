@@ -185,11 +185,6 @@ vector<Node> AStar::makePath(array<array<Node, (Y_MAX / Y_STEP)>, (X_MAX / X_STE
 			usablePath.emplace_back(top);
 		}
 
-		for (int i = 0; i < usablePath.size(); i++) {
-			cout << " x:" << usablePath[i].x << " y:" << usablePath[i].y << " ";
-		}
-		cout << endl;
-	
 		return usablePath;
 	}
 	catch (const exception& e) {

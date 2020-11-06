@@ -1,9 +1,4 @@
-﻿  Enemy.cpp
-g:\dev\workspace\plantgame\plantgame\enemy.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-g:\dev\workspace\plantgame\plantgame\enemy.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-g:\dev\workspace\plantgame\plantgame\enemy.h(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-g:\dev\workspace\plantgame\plantgame\enemy.cpp(32): warning C4018: '<=': signed/unsigned mismatch
-  main.cpp
+﻿  main.cpp
 g:\dev\workspace\plantgame\plantgame\main.cpp(32): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 g:\dev\workspace\plantgame\plantgame\main.cpp(33): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 g:\dev\workspace\plantgame\plantgame\main.cpp(34): warning C4067: unexpected tokens following preprocessor directive - expected a newline
@@ -18,8 +13,7 @@ g:\dev\workspace\plantgame\plantgame\astar.h(3): warning C4067: unexpected token
 g:\dev\workspace\plantgame\plantgame\astar.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 g:\dev\workspace\plantgame\plantgame\astar.h(5): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 g:\dev\workspace\plantgame\plantgame\astar.h(6): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-g:\dev\workspace\plantgame\plantgame\main.cpp(105): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 g:\dev\workspace\plantgame\plantgame\main.cpp(106): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-g:\dev\workspace\plantgame\plantgame\main.cpp(125): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
+g:\dev\workspace\plantgame\plantgame\main.cpp(107): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+g:\dev\workspace\plantgame\plantgame\main.cpp(126): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Plantgame.vcxproj -> G:\Dev\Workspace\plantgame\Debug\Plantgame.exe
